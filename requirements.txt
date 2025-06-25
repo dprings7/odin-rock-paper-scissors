@@ -1,0 +1,58 @@
+REQUIREMENTS:
+
+The game should be played between the player and the computer
+The computers choice should be randomly determined
+The humans choice should be entered by prompt
+The humans choice should be case-insensitive
+There should be two score variables, one for each player
+These should be incremented if either wins a round
+The winner of the round should be displayed at the end of a round
+The game should play 5 rounds
+
+PSEUDOCODE:
+
+START
+
+SET playerScore, computerScore to 0
+SET roundsRemaining to 5
+
+WHILE roundsRemaining > 0
+    GET playerChoice (set to lowerCase) 
+    SET computerChoice (math.random)
+
+    IF playerChoice == "rock" && computerChoice == "scissors" THEN
+        INCREMENT playerScore by 1
+        PRINT "Rock beats scissors, you win"
+    ELSE IF playerChoice == "scissors" && computerChoice == "paper" THEN
+        INCREMENT playerScore by 1
+        PRINT "scissors beats paper, you win"
+    ELSE IF playerChoice == "paper" && computerChoice == "rock" THEN
+        INCREMENT playerScore by 1
+        PRINT "Paper beats rock, you win"
+    ELSE IF computerChoice == "rock" && playerChoice == "scissors" THEN
+        INCREMENT computerScore by 1
+        PRINT "Rock beats scissors, you lose"
+    ELSE IF computerChoice == "scissors" && playerChoice == "paper" THEN
+        INCREMENT computerScore by 1
+        PRINT "Scissors beats paper, you lose"
+    ELSE IF computerChoice == "paper" && playerChoice == "rock" THEN
+        INCREMENT computerScore by 1
+        PRINT "Paper beats rock, you lose"
+    ELSE
+        PRINT "It's a tie"
+    ENDIF
+
+    PRINT playerScore, computerScore
+    DECREMENT roundsRemaining by 1
+
+ENDWHILE
+
+IF playerScore > computerScore THEN
+    PRINT "Player wins"
+ELSE IF playerScore < computerScore THEN
+    PRINT "Computer wins"
+ELSE
+    PRINT "The game ended in a tie"
+ENDIF
+
+END
