@@ -38,34 +38,19 @@ function printFinalScore() {
 }
 
 function playRound(playerChoice, computerChoice) {
-    if (playerChoice == "rock" && computerChoice == "scissors")
+    if (playerChoice == "rock" && computerChoice == "scissors" || 
+        playerChoice == "scissors" && computerChoice == "paper" ||
+        playerChoice == "paper" && computerChoice == "rock") 
     {
-        console.log("Rock beats scissors, you win");
+        console.log(playerChoice + " beats " + computerChoice + ", you win");
         playerScore += 1;
     }
-    else if (playerChoice == "scissors" && computerChoice == "paper")
+    else if 
+        (computerChoice == "rock" && playerChoice == "scissors" ||
+        computerChoice == "scissors" && playerChoice == "paper" ||
+        computerChoice == "paper" && playerChoice == "rock")
     {
-        console.log("Scissors beats paper, you win");
-        playerScore += 1;
-    }
-    else if (playerChoice == "paper" && computerChoice == "rock")
-    {
-        console.log("Paper beats rock, you win");
-        playerScore += 1;
-    }
-    else if (computerChoice == "rock" && playerChoice == "scissors")
-    {
-        console.log("Rock beats scissors, you lose")
-        computerScore += 1;
-    }
-    else if (computerChoice == "scissors" && playerChoice == "paper")
-    {
-        console.log("Scissors beats paper, you lose");
-        computerScore += 1;
-    }
-    else if (computerChoice == "paper" && playerChoice == "rock")
-    {
-        console.log("Paper beats rock, you lose");
+        console.log(computerChoice + " beats " + playerChoice + ", you lose");
         computerScore += 1;
     }
     else {
