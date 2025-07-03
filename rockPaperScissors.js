@@ -1,48 +1,77 @@
+let playerScore = 0, computerScore = 0;
+const resultsContainer = document.querySelector('.results-container');
+
+function capitiliseFirstLetter(str) {
+    return String(str[0]).toUpperCase() + String(str).slice(1);
+}
+
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        playRound(button.textContent.toLowerCase());
+    });
+})
+
+function clearText(container) {
+    // If there is already text content displayed, clear it all so the new content can replace it
+    while (container.firstChild) {
+        container.firstChild.remove();
+    }
+}
+
 function getComputerChoice() {
     let choice = Math.ceil(Math.random() * 3);
-
+    let choicePara = document.createElement('p');
+    choicePara.className = 'computer-choice';
     if (choice == 1) {
-        console.log("The computer has chosen: rock");
+        choicePara.textContent = "The computer has chosen Rock";
+        resultsContainer.appendChild(choicePara);
         return "rock";
     }
     else if (choice == 2) {
-        console.log("The computer has chosen: scissors");
+        choicePara.textContent = "The computer has chosen Scissors";
+        resultsContainer.appendChild(choicePara);
         return "scissors";
     }
     else {
-        console.log("The computer has chosen: paper");
+        choicePara.textContent = "The computer has chosen Paper";
+        resultsContainer.appendChild(choicePara);
         return "paper";
     }
 }
 
-function getPlayerChoice() {
-    playerChoice = prompt("Choose your weapon").toLowerCase();
-    console.log("You have chosen: " + playerChoice);
-    return playerChoice;
+function displayCurrentScore() {
+    let currentScorePara = document.createElement('p');
+    currentScorePara.textContent = `Current Score: Player: ${playerScore} Computer: ${computerScore}`
+    resultsContainer.appendChild(currentScorePara);
 }
 
-function printCurrentScore() {
-    console.log("Player Score: " + playerScore + " - " + "Computer Score: " + computerScore);
-}
-
-function printFinalScore() {
+function displayFinalScore() {
+    let finalScorePara = document.createElement('p');
     if (playerScore > computerScore) {
-        console.log("You win!");
-    }
-    else if (playerScore < computerScore) {
-        console.log("You lose!");
+        finalScorePara.textContent = "You win!";
     }
     else {
-        console.log("The game has ended in a tie!");
+        finalScorePara.textContent = "You lose!";
     }
+    resultsContainer.appendChild(finalScorePara);
+    finalScorePara.textContent = "Select any button to start a new game";
+    resultsContainer.appendChild(finalScorePara);
 }
 
-function playRound(playerChoice, computerChoice) {
+function playRound(playerChoice) {
+
+    clearText(resultsContainer);
+    let playerChoicePara = document.createElement('p');
+    playerChoicePara.textContent = `You have chosen ${capitiliseFirstLetter(playerChoice)}`;
+    resultsContainer.appendChild(playerChoicePara);
+    let computerChoice = getComputerChoice();
+    let resultPara = document.createElement('p');
     if (playerChoice == "rock" && computerChoice == "scissors" || 
         playerChoice == "scissors" && computerChoice == "paper" ||
         playerChoice == "paper" && computerChoice == "rock") 
     {
-        console.log(playerChoice + " beats " + computerChoice + ", you win");
+        resultPara.textContent = `${capitiliseFirstLetter(playerChoice)} beats ${capitiliseFirstLetter(computerChoice)} - you win!`;
         playerScore += 1;
     }
     else if 
@@ -50,26 +79,19 @@ function playRound(playerChoice, computerChoice) {
         computerChoice == "scissors" && playerChoice == "paper" ||
         computerChoice == "paper" && playerChoice == "rock")
     {
-        console.log(computerChoice + " beats " + playerChoice + ", you lose");
+        resultPara.textContent = `${capitiliseFirstLetter(computerChoice)} beats ${capitiliseFirstLetter(playerChoice)} - you lose!`;
         computerScore += 1;
     }
     else {
-        console.log("It's a tie")
+        resultPara.textContent = "It's a tie!";
     }
+    resultsContainer.appendChild(resultPara);
+    displayCurrentScore();
 
-    printCurrentScore();
+    if (playerScore === 5 || computerScore === 5) {
+        displayFinalScore();
+        playerScore = 0;
+        computerScore = 0;
+    }
     return;
 }
-
-function playGame() {
-    let roundsRemaining = 5;
-
-    while (roundsRemaining) {
-        playRound(getPlayerChoice(), getComputerChoice());
-        roundsRemaining -= 1;
-    }
-    printFinalScore();
-}
-
-let playerScore = 0, computerScore = 0;
-playGame();
